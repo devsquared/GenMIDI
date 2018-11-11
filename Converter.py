@@ -15,8 +15,10 @@ class converter():
             # lets write all of these to a new directory
             return csv
 
-    def all_midi_in_path_to_csv(self, midi_folder_path, destination_path):
+    def all_midi_in_path_to_csv(self, midi_folder_path):
         now = datetime.datetime.now()
+        current_timestamp = now.strftime("%Y-%m-%d %H:%M")
+        destination_path = "CSVs%d" % current_timestamp
 
         # Create the new folder
         try:
@@ -32,9 +34,8 @@ class converter():
             filename = os.fsdecode(file)
             if filename.endswith(".mid") or filename.endswith(".midi"):
                 new_csv = midicsv.midi_to_csv(filename)
-                current_timestamp = now.strftime("%Y-%m-%d %H:%M")
                 save_name = destination_path + "/" + "weewee_%d.csv" % current_timestamp
-                new_file_name = os.path.join(os.path.expanduser('~'), 'Documents', save_name)
+                new_file_name = os.path.join(os.path.expanduser('~'), midi_folder_path, save_name)
                 f = open(new_file_name, "x")
                 f.write(new_csv)
 
